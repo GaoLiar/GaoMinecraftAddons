@@ -1,0 +1,27 @@
+table {
+  border-collapse: collapse
+}
+td > input{
+  width: 250px;
+}
+
+table#result td {
+  width: 198px;
+}
+
+#submit-button {
+  width: 100%;
+}
+
+.youtube2 {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+.youtube2 iframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100% !important;
+  height: 100% !important;
+}

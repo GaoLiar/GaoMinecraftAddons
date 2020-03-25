@@ -1,0 +1,3 @@
+[submodule "SkinPackGenerator"]
+	path = SkinPackGenerator
+	url = https://gist.github.com/6d69a43e75e7e858053e4c3547fd2149.git

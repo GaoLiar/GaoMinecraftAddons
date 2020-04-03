@@ -53,6 +53,12 @@ $("#submit-button").click(() => {
             "texture": "skin.png",
             "type": "free"
           },
+          {
+            "localization_name": "SkinA",
+            "geometry": "geometry.humanoid.customSlim",
+            "texture": "skin.png",
+            "type": "free"
+          },
         ],
         "serialize_name": serialize_name,
         "localization_name": serialize_name,
@@ -67,11 +73,13 @@ $("#submit-button").click(() => {
       texts.file("en_US.lang", [
         `skinpack.${serialize_name}=${serialize_name}`,
         `skin.${serialize_name}.Skin=skin1`,
+        `skin.${serialize_name}.SkinA=skin1`,
       ].join("\n"));
 
       texts.file("ja_JP.lang", [
         `skinpack.${serialize_name}=${pack_name}`,
         `skin.${serialize_name}.Skin=${skin_name}`,
+        `skin.${serialize_name}.SkinA=${skin_name}`,
       ].join("\n"));
 
       zip.generateAsync({type:"blob"})

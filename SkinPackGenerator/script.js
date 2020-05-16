@@ -95,13 +95,17 @@ $("#submit-button").click(() => {
 $("input[type=file]").change(function() {
   var file = $(this).prop('files')[0];
   if(!file.type.match('image.png')){
-    Swal.fire("画像タイプエラー","スキンに使える画像はpng画像ファイルだけです","error");
-    return;
+    Swal.fire({
+        title : "画像タイプの警告",
+        text : "この画像の形式は「" + file.type + "」です。スキンに使える画像は「image/png」の画像ファイルだけです。このファイルでは正しくスキンファイルが読み込めない場合があります。",
+        icon : "warning",
+    });        
   }
   var fr=new FileReader();
   fr.onload=function(evt) {
     imgData=evt.target.result.substr(evt.target.result.indexOf("base64,")+"base64,".length);
     $("#submit-button").prop("disabled", false);
+    $("#preview").attr("src", evt.target.result);
   }
   fr.readAsDataURL(file);  
 })

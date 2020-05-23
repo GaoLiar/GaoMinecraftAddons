@@ -77,7 +77,18 @@ $("#submit-button").click(() => {
       zip.file("manifest.json", JSON.stringify(manifest,undefined,2));
 
       // アイコン画像
-      zip.file("pack_icon.png", $.get(document.location.href.substr(0, document.location.href.lastIndexOf("/")) + "/pack_icon.png"));
+      zip.file("pack_icon.png", new Promise(function(resolve, reject) 
+       {
+           JSZipUtils.getBinaryContent("pack_icon.png", function (err, data) 
+           {
+               if(err) 
+               {
+                   reject(err);
+               } else {
+                   resolve(data);
+               }
+           });
+       }));
     
       // texture image file
       let img_path = $("select[name=item_id]").val();

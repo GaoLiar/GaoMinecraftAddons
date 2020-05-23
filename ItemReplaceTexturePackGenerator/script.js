@@ -1,7 +1,8 @@
 const generateUuid=($=(a,b)=>(Math.floor(Math.random()*a)+b).toString(16))=>'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/x/g,_=>$(16,0)).replace(/y/g,_=>$(4,8));
 
 var item_ids = [
-    { name : "エリトラ", path : "textures/models/armor/elytra.png", },
+    { name : "エリトラ（装備中）", path : "textures/models/armor/elytra.png", },
+    { name : "絵画", path : "textures/painting/kz.png", },
 ];
 
 $(document).ready(function() {

@@ -10,84 +10,83 @@ $(document).ready(function() {
 let imgData = null;
 $("#submit-button").click(() => {
   
-  Swal.fire({
-    title: "スキンパックを生成してダウンロード",
-    html: `是非チャンネル登録してください！<div class="g-ytsubscribe" data-channelid="UCplea8gH3d8ZZEVPg2XiMAA" data-layout="full" data-count="default"></div>`,
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'ダウンロードする'
-  }).then((result) => {
-    if (result.value) {
-      let zip = new JSZip();
-      let serialize_name = "GaoSkinPack"+generateUuid();
-      let pack_id = "GaoSkinPack";
-      let pack_name = $("#pack_name").val();
-      let skin_name = $("#skin_name").val();
+  let zip = new JSZip();
+  let serialize_name = "GaoSkinPack"+generateUuid();
+  let pack_id = "GaoSkinPack";
+  let pack_name = $("#pack_name").val();
+  let skin_name = $("#skin_name").val();
 
-      // manifest
-      let manifest = {
-        "format_version": 2,
-        "header": {
-          "description": pack_id,
-          "name": pack_id,
-          "uuid": $("#p_uuid").val(),
-          "version": [0, 0, 1],
-        },
-        "modules": [
-          {
-            "description": pack_id,
-            "type": "skin_pack",
-            "uuid": $("#m_uuid").val(),
-            "version": [0, 0, 1]
-          }
-        ]
+  // manifest
+  let manifest = {
+    "format_version": 2,
+    "header": {
+      "description": pack_id,
+      "name": pack_id,
+      "uuid": $("#p_uuid").val(),
+      "version": [0, 0, 1],
+    },
+    "modules": [
+      {
+        "description": pack_id,
+        "type": "skin_pack",
+        "uuid": $("#m_uuid").val(),
+        "version": [0, 0, 1]
       }
-      zip.file("manifest.json", JSON.stringify(manifest,undefined,2));
+    ]
+  }
+  zip.file("manifest.json", JSON.stringify(manifest,undefined,2));
 
-      // skins.json
-      let skins = {
-        "skins": [
-          {
-            "localization_name": "Skin",
-            "texture": "skin.png",
-            "type": "free"
-          },
-          {
-            "localization_name": "SkinA",
-            "geometry": "geometry.humanoid.customSlim",
-            "texture": "skin.png",
-            "type": "free"
-          },
-        ],
-        "serialize_name": serialize_name,
-        "localization_name": serialize_name,
-      };
-      zip.file("skins.json", JSON.stringify(skins,undefined,2));
+  // skins.json
+  let skins = {
+    "skins": [
+      {
+        "localization_name": "Skin",
+        "texture": "skin.png",
+        "type": "free"
+      },
+      {
+        "localization_name": "SkinA",
+        "geometry": "geometry.humanoid.customSlim",
+        "texture": "skin.png",
+        "type": "free"
+      },
+    ],
+    "serialize_name": serialize_name,
+    "localization_name": serialize_name,
+  };
+  zip.file("skins.json", JSON.stringify(skins,undefined,2));
 
-      // skin image file
-      zip.file("skin.png", imgData, {base64: true});
+  // skin image file
+  zip.file("skin.png", imgData, {base64: true});
 
-      // texts folder
-      var texts = zip.folder("texts");
-      texts.file("en_US.lang", [
-        `skinpack.${serialize_name}=${serialize_name}`,
-        `skin.${serialize_name}.Skin=skin1`,
-        `skin.${serialize_name}.SkinA=skin1`,
-      ].join("\n"));
+  // texts folder
+  var texts = zip.folder("texts");
+  texts.file("en_US.lang", [
+    `skinpack.${serialize_name}=${serialize_name}`,
+    `skin.${serialize_name}.Skin=skin1`,
+    `skin.${serialize_name}.SkinA=skin1`,
+  ].join("\n"));
 
-      texts.file("ja_JP.lang", [
-        `skinpack.${serialize_name}=${pack_name}`,
-        `skin.${serialize_name}.Skin=${skin_name}`,
-        `skin.${serialize_name}.SkinA=${skin_name}`,
-      ].join("\n"));
+  texts.file("ja_JP.lang", [
+    `skinpack.${serialize_name}=${pack_name}`,
+    `skin.${serialize_name}.Skin=${skin_name}`,
+    `skin.${serialize_name}.SkinA=${skin_name}`,
+  ].join("\n"));
 
-      zip.generateAsync({type:"blob"})
-        .then(function(content) {
+  zip.generateAsync({type:"blob"}).then(function(content) {
+    Swal.fire({
+      title: "スキンパックを生成してダウンロード",
+      html: `是非チャンネル登録してください！<div class="g-ytsubscribe" data-channelid="UCplea8gH3d8ZZEVPg2XiMAA" data-layout="full" data-count="default"></div>`,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'ダウンロードする'
+    }).then((result) => {
+      if (result.value) {
         // see FileSaver.js
         saveAs(content, "GaoSkinPack.mcpack");
-      });
-    }
+      }
+    });
   });
   return false;
 })

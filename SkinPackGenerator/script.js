@@ -73,7 +73,7 @@ $("#submit-button").click(() => {
     `skin.${serialize_name}.SkinA=${skin_name}`,
   ].join("\n"));
 
-  zip.generateAsync({type:"blob"}).then(function(content) {
+  zip.generateAsync({type:"blob", mimeType:"application/mcpack"}).then(function(content) {
     Swal.fire({
       title: "スキンパックを生成してダウンロード",
       html: `是非チャンネル登録してください！<div class="g-ytsubscribe" data-channelid="UCplea8gH3d8ZZEVPg2XiMAA" data-layout="full" data-count="default"></div>`,
